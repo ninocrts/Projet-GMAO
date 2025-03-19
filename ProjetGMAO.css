@@ -78,3 +78,38 @@ font-weight: bold;
     top: -34px;
     width: 0;
   }
+
+  .cercle_vert {
+    width: 25px;
+    height: 25px;
+    background: rgb(0, 255, 13);
+    border-radius: 50%
+  }
+
+  .carreau_jaune {
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-bottom: 25px solid rgb(255, 255, 0);
+    position: relative;
+    margin-top: -25px; /* Ajuste l'espace en haut du diamant pour rapprocher l'élément du dessus */
+    margin-bottom: 5px; /* Réduire l'espace en bas du diamant */
+  }
+  
+  .carreau_jaune:after {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 25px;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top: 25px solid rgb(255, 255, 0); 
+  }
+  
+
+  .carre_rouge {
+    width: 25px;
+    height: 25px;
+    background: red; 
+  }
