@@ -1,0 +1,15 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+	  {
+		"type": "shell",
+		"label": "build",
+		"command": "cl.exe /Zi /EHsc /Ivcpkg_installed/x64-windows/include /Fe:server.exe server.c /link vcpkg_installed/x64-windows/lib/websockets.lib",
+		"problemMatcher": ["$msCompile"],
+		"group": {
+		  "kind": "build",
+		  "isDefault": true
+		}
+	  }
+	]
+  }  

@@ -1,0 +1,1 @@
+cl.exe /Zi /EHsc /Ivcpkg_installed/x64-windows/include /Fe:server.exe server.c /link vcpkg_installed/x64-windows/lib/websockets.lib 
