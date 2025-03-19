@@ -7,8 +7,13 @@
     width: 150px;
     border: 3px solid #000000;
     border-radius: 10px;
+    transition: color 0.3s, font-weight 0.3s;
 }
 
+.conteneur1:hover {
+    color: red;
+    font-weight: bold;
+}
 
 
 .conteneur2 {
@@ -20,7 +25,14 @@
     width: 165px;
     border: 3px solid #000000;
     border-radius: 10px;
+    transition: color 0.3s, font-weight 0.3s;
 }
+
+.conteneur2:hover {
+    color: red;
+    font-weight: bold;
+}
+
 
 .conteneur3 {
     display: flex;
@@ -31,6 +43,7 @@
     width: 50px;
     border: 3px solid #64aaff;
     border-radius: 10px;
+    transition: color 0.3s, font-weight 0.3s;
     
 }
 
@@ -40,8 +53,28 @@ font-weight: bold;
 }
 
 
-
-.conteneur1:hover {
-    color: red;
+.usine {
+    background: rgb(0, 0, 0);
+    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 55px;
+    margin-left: 20px;
+    margin-top: 55px;
+    position: relative;
+    width: 100px;
     font-weight: bold;
-}
+  }
+  
+  .usine:before {
+    border-bottom: 35px solid rgb(0, 0, 0);
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    content: "";
+    height: 0;
+    left: 0;
+    position: absolute;
+    top: -34px;
+    width: 0;
+  }
