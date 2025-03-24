@@ -1,119 +1,128 @@
 .conteneur1 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(218, 218, 218); 
-    height: 50px;
-    width: 150px;
-    border: 3px solid #000000;
-    border-radius: 10px;
-    transition: color 0.3s, font-weight 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(218, 218, 218); 
+  height: 50px;
+  width: 150px;
+  border: 3px solid #000000;
+  border-radius: 10px;
+  transition: color 0.3s, font-weight 0.3s;
 }
 
 .conteneur1:hover {
-    color: red;
-    font-weight: bold;
+  color: red;
+  font-weight: bold;
 }
 
-
 .conteneur2 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(150, 220, 255); 
-    height: 60px;
-    width: 165px;
-    border: 3px solid #000000;
-    border-radius: 10px;
-    transition: color 0.3s, font-weight 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(150, 220, 255); 
+  height: 60px;
+  width: 165px;
+  border: 3px solid #000000;
+  border-radius: 10px;
+  transition: color 0.3s, font-weight 0.3s;
 }
 
 .conteneur2:hover {
-    color: red;
-    font-weight: bold;
+  color: red;
+  font-weight: bold;
 }
 
-
 .conteneur3 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(126, 209, 245); 
-    height: 50px;
-    width: 50px;
-    border: 3px solid #64aaff;
-    border-radius: 10px;
-    transition: color 0.3s, font-weight 0.3s;
-    
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(126, 209, 245); 
+  height: 50px;
+  width: 50px;
+  border: 3px solid #64aaff;
+  border-radius: 10px;
+  transition: color 0.3s, font-weight 0.3s;
 }
 
 .conteneur3:hover {
-color: red;
-font-weight: bold;
+  color: red;
+  font-weight: bold;
 }
 
 
 .usine {
-    background: rgb(0, 0, 0);
-    display: inline-block;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 55px;
-    margin-left: 20px;
-    margin-top: 55px;
-    position: relative;
-    width: 100px;
-    font-weight: bold;
-  }
-  
-  .usine:before {
-    border-bottom: 35px solid rgb(0, 0, 0);
-    border-left: 50px solid transparent;
-    border-right: 50px solid transparent;
-    content: "";
-    height: 0;
-    left: 0;
-    position: absolute;
-    top: -34px;
-    width: 0;
-  }
+  background: rgb(0, 0, 0);
+  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 55px;
+  width: 100px;
+  position: relative; /* Positionnement de référence pour les formes */
+  font-weight: bold;
+  margin: 20px;
+}
 
-  .cercle_vert {
-    width: 25px;
-    height: 25px;
-    background: rgb(0, 255, 13);
-    border-radius: 50%
-  }
+.usine:before {
+  border-bottom: 35px solid rgb(0, 0, 0);
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  content: "";
+  height: 0;
+  position: absolute;
+  top: -34px;
+  left: 0;
+  width: 0;
+}
 
-  .carreau_jaune {
-    width: 0;
-    height: 0;
-    border: 10px solid transparent;
-    border-bottom: 25px solid rgb(255, 255, 0);
-    position: relative;
-    margin-top: -25px; 
-    margin-bottom: 5px; 
-  }
-  
-  .carreau_jaune:after {
-    content: '';
-    position: absolute;
-    left: -10px;
-    top: 25px;
-    width: 0;
-    height: 0;
-    border: 10px solid transparent;
-    border-top: 25px solid rgb(255, 255, 0); 
-  }
-  
+/* Conteneur des formes */
+.formes {
+  position: absolute;
+  top: -30;
+  right: -10;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
 
-  .carre_rouge {
-    width: 25px;
-    height: 25px;
-    background: red; 
-  }
+/* Cercle vert */
+.cercle_vert {
+  width: 25px;
+  height: 25px;
+  background: rgb(0, 255, 13);
+  border-radius: 50%;
+}
 
-  .hidden {
-    display: none;
+/* Carreau jaune */
+.carreau_jaune {
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-bottom: 25px solid rgb(255, 255, 0);
+  position: relative;
+  top: -20;
+}
+
+.carreau_jaune:after {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 25px;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-top: 25px solid rgb(255, 255, 0);
+}
+
+/* Carré rouge */
+.carre_rouge {
+  width: 25px;
+  height: 25px;
+  background: red;
+}
+
+/* Pour cacher les formes */
+.hidden {
+  display: none;
 }
