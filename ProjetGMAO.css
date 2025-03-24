@@ -92,8 +92,8 @@ font-weight: bold;
     border: 10px solid transparent;
     border-bottom: 25px solid rgb(255, 255, 0);
     position: relative;
-    margin-top: -25px; /* Ajuste l'espace en haut du diamant pour rapprocher l'élément du dessus */
-    margin-bottom: 5px; /* Réduire l'espace en bas du diamant */
+    margin-top: -25px; 
+    margin-bottom: 5px; 
   }
   
   .carreau_jaune:after {
