@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(218, 218, 218); 
+  background-color: rgb(214, 213, 213); 
   height: 50px;
   width: 150px;
   border: 3px solid #000000;
@@ -92,6 +92,7 @@
   height: 25px;
   background: rgb(0, 255, 13);
   border-radius: 50%;
+  margin-left: 10px;
 }
 
 /* Carreau jaune */
@@ -130,4 +131,8 @@
 .boite{
   display: flex;
   border: 4px black;
+}
+
+body {
+  background-color: lightyellow;
 }
