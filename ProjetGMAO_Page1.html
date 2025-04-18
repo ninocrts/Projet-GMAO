@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion de Maintenance Assistée par Ordinateur</title>
+    <link rel="stylesheet" href="ProjetGMAO.css">
+</head>
+<body>
+
+    <div class="conteneur1">   
+        <a href="Projet_GMAO_Interface_Machine.html">Consulter l'interface Machine</a> 
+    </div>
+    <br>
+    <div class="conteneur1">Consulter</div> 
+    <br>
+    <div class="conteneur2">Maintenance</div> 
+    <br>
+    <div class="conteneur3">1</div> 
+    <br>
+    
+    <div class="usine" style="color: white;">
+        Machine N1
+        <!-- Les formes sont ici, mais cachées au début -->
+        <div class="formes">
+            <div class="cercle_vert hidden" id="cercleVert"></div>
+            <div class="carreau_jaune hidden" id="carreauJaune"></div>
+            <div class="carre_rouge hidden" id="carreRouge"></div>
+        </div>
+    </div>
+
+    <button onclick="afficherForme('cercleVert')">Cercle Vert</button>
+    <button onclick="afficherForme('carreauJaune')">Carreau Jaune</button>
+    <button onclick="afficherForme('carreRouge')">Carré Rouge</button>
+
+    <script src="ProjetGMAO.js"></script>
+</body>
+</html>
