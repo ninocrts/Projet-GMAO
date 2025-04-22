@@ -1,138 +1,147 @@
-.conteneur1 {
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
+
+.header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  background-color: rgb(214, 213, 213); 
-  height: 50px;
-  width: 150px;
-  border: 3px solid #000000;
-  border-radius: 10px;
-  transition: color 0.3s, font-weight 0.3s;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
 }
 
-.conteneur1:hover {
-  color: red;
+.titre {
+  font-size: 20px;
   font-weight: bold;
-}
-
-.conteneur2 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgb(150, 220, 255); 
-  height: 60px;
-  width: 165px;
-  border: 3px solid #000000;
+  border: 2px solid #000;
+  padding: 12px 24px;
+  background-color: #ffffff;
   border-radius: 10px;
-  transition: color 0.3s, font-weight 0.3s;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.conteneur2:hover {
-  color: red;
-  font-weight: bold;
-}
-
-.conteneur3 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgb(126, 209, 245); 
-  height: 50px;
-  width: 50px;
-  border: 3px solid #64aaff;
-  border-radius: 10px;
-  transition: color 0.3s, font-weight 0.3s;
-}
-
-.conteneur3:hover {
-  color: red;
-  font-weight: bold;
-}
-
-
-.usine {
-  background: rgb(0, 0, 0);
+.chaines .btn-chain {
   display: inline-block;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 55px;
-  width: 100px;
-  position: relative; /* Positionnement de référence pour les formes */
+  text-decoration: none;
+  margin: 0 5px;
+  padding: 10px 18px;
+  border: 2px solid lightblue;
+  background-color: white;
+  color: #333;
   font-weight: bold;
-  margin: 20px;
+  border-radius: 8px;
+  transition: 0.3s;
 }
 
-.usine:before {
-  border-bottom: 35px solid rgb(0, 0, 0);
-  border-left: 50px solid transparent;
-  border-right: 50px solid transparent;
-  content: "";
-  height: 0;
-  position: absolute;
-  top: -34px;
-  left: 0;
-  width: 0;
+.chaines .btn-chain:hover {
+  background-color: #e6f5ff;
 }
 
-/* Conteneur des formes */
-.formes {
-  position: absolute;
-  top: -30;
-  right: -10;
+.chaines .btn-chain.active {
+  border-color: red;
+  background-color: #ffecec;
+  color: red;
+}
+
+.machines {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.machine {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-end;
+  align-items: center;
+  gap: 8px;
 }
 
-/* Cercle vert */
-.cercle_vert {
-  width: 25px;
-  height: 25px;
-  background: rgb(0, 255, 13);
-  border-radius: 50%;
-  margin-left: 10px;
-}
-
-/* Carreau jaune */
-.carreau_jaune {
-  width: 0;
-  height: 0;
-  border: 10px solid transparent;
-  border-bottom: 25px solid rgb(255, 255, 0);
-  position: relative;
-  top: -20;
-}
-
-.carreau_jaune:after {
-  content: '';
-  position: absolute;
-  left: -10px;
-  top: 25px;
-  width: 0;
-  height: 0;
-  border: 10px solid transparent;
-  border-top: 25px solid rgb(255, 255, 0);
-}
-
-/* Carré rouge */
-.carre_rouge {
-  width: 25px;
-  height: 25px;
-  background: red;
-}
-
-/* Pour cacher les formes */
-.hidden {
-  display: none;
-}
-
-.boite{
+.usine {
+  background: #444;
+  color: white;
+  font-weight: bold;
+  width: 120px;
+  height: 80px;
   display: flex;
-  border: 4px black;
+  justify-content: center;
+  align-items: center;
+  transform: skewY(-5deg);
+  position: relative;
+  border-radius: 8px;
+  box-shadow: 3px 3px 8px rgba(0,0,0,0.2);
 }
 
-body {
-  background-color: lightyellow;
+.formes {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+}
+
+.cercle_vert,
+.carre_rouge,
+.carreau_jaune {
+  width: 20px;
+  height: 20px;
+  margin-bottom: 5px;
+}
+
+.cercle_vert {
+  background-color: #28a745;
+  border-radius: 50%;
+}
+
+.carre_rouge {
+  background-color: #dc3545;
+  border-radius: 4px;
+}
+
+.carreau_jaune {
+  background-color: #ffc107;
+  transform: rotate(45deg);
+}
+
+.btn-consulter {
+  padding: 8px 16px;
+  border: 2px solid #000;
+  background-color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-consulter:hover {
+  background-color: #f0f0f0;
+}
+
+.btn-consulter.warning {
+  border-color: red;
+  color: red;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 60px;
+}
+
+.btn-footer {
+  background-color: #cce5ff;
+  border: 2px solid black;
+  padding: 14px 30px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.btn-footer:hover {
+  background-color: #b3d9ff;
 }
