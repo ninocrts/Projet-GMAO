@@ -11,6 +11,8 @@ static int callback_echo(struct lws *wsi, enum lws_callback_reasons reason,
     switch (reason) {
     case LWS_CALLBACK_RECEIVE:  // Utiliser LWS_CALLBACK_RECEIVE pour les messages reçus
         printf("Message recu : %.*s\n", (int)len, (char *)in);
+        system("cscript.exe C:\\Users\\utilisateur\\Desktop\\EPF\\PAML\\Projet GMAO\\Projet-GMAO\\runExcel.vbs");
+
         // Écho du message au client
         lws_write(wsi, (unsigned char *)in, len, LWS_WRITE_TEXT);
         break;
