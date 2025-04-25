@@ -1,18 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interface Machine</title>
-    <link rel="stylesheet" href="ProjetGMAO.css">
+  <meta charset="UTF-8">
+  <title>Interface Machine</title>
+  <link rel="stylesheet" href="ProjetGMAO.css">
 </head>
 <body>
 
+  <div class="interface-container">
+    <div class="left-panel">
+      <button class="info-btn">ETAT :</button>
+      <button class="info-btn">NOM MACHINE:</button>
+      <button class="info-btn">ID MACHINE:</button>
+    </div>
+
+    <div class="right-panel">
+      <div class="intervention-box">
+        <div class="intervention-header">LISTE DES INTERVENTIONS</div>
+        <div class="intervention-list"></div>
+      </div>
+      <button class="action-btn">AJOUTER </button>
+      <button class="action-btn"> SUPPRIMER</button>
+    </div>
     
-    <div class="conteneur1">ETAT - <div class="cercle_vert" id="cercleVert"></div> </div> <br>
-    <div class="conteneur1">NOM MACHINE</div> <br>
-    <div class="conteneur1">ID MACHINE</div> <br>
+  </div>
 
 </body>
-<script src="ProjetGMAO.js"></script>
 </html>
