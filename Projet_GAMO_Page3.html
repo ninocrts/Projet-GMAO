@@ -21,27 +21,27 @@
     <div class="machine">
       <div class="formes"><div class="cercle_vert"></div></div>
       <div class="usine">MACHINE N 11</div>
-      <button class="btn-consulter">CONSULTER</button>
+      <button class="btn-consulter" id="M11">CONSULTER</button>
     </div>
     <div class="machine">
       <div class="formes"><div class="cercle_vert"></div></div>
       <div class="usine">MACHINE N 12</div>
-      <button class="btn-consulter">CONSULTER</button>
+      <button class="btn-consulter" id="M12">CONSULTER</button>
     </div>
     <div class="machine">
       <div class="formes"><div class="carreau_jaune"></div></div>
       <div class="usine">MACHINE N 13</div>
-      <button class="btn-consulter">CONSULTER</button>
+      <button class="btn-consulter" id="M13">CONSULTER</button>
     </div>
     <div class="machine">
       <div class="formes"><div class="cercle_vert"></div></div>
       <div class="usine">MACHINE N 14</div>
-      <button class="btn-consulter">CONSULTER</button>
+      <button class="btn-consulter" id="M14">CONSULTER</button>
     </div>
     <div class="machine">
       <div class="formes"><div class="carre_rouge"></div></div>
       <div class="usine">MACHINE N 15</div>
-      <button class="btn-consulter">CONSULTER</button>
+      <button class="btn-consulter" id="M15">CONSULTER</button>
     </div>
   </div>
 
@@ -49,6 +49,36 @@
     <button class="btn-footer">MAINTENANCE</button>
     <button class="btn-footer">STOCK</button>
   </div>
+
+  <script>
+    // Connexion au serveur WebSocket
+    const ws = new WebSocket('ws://localhost:9001');
+
+    ws.onopen = () => {
+      console.log("Connexion WebSocket établie");
+    };
+
+    ws.onerror = (error) => {
+      console.error("Erreur WebSocket:", error);
+    };
+
+    ws.onmessage = (event) => {
+      console.log("Message reçu du serveur :", event.data);
+      // Tu peux gérer la réponse du serveur ici si besoin
+    };
+
+    // Ajouter un gestionnaire de clic à tous les boutons "CONSULTER"
+    document.querySelectorAll('.btn-consulter').forEach(button => {
+      button.addEventListener('click', () => {
+        if (ws.readyState === WebSocket.OPEN) {
+          ws.send(button.id);  // Envoie l'ID du bouton (ex: "M1")
+          console.log(`Envoyé au serveur : ${button.id}`);
+        } else {
+          console.warn("WebSocket non connecté");
+        }
+      });
+    });
+  </script>
 
 </body>
 </html>

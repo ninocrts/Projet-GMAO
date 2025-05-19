@@ -50,5 +50,35 @@
     <button class="btn-footer">STOCK</button>
   </div>
 
+  <script>
+    // Connexion au serveur WebSocket
+    const ws = new WebSocket('ws://localhost:9001');
+
+    ws.onopen = () => {
+      console.log("Connexion WebSocket établie");
+    };
+
+    ws.onerror = (error) => {
+      console.error("Erreur WebSocket:", error);
+    };
+
+    ws.onmessage = (event) => {
+      console.log("Message reçu du serveur :", event.data);
+      // Tu peux gérer la réponse du serveur ici si besoin
+    };
+
+    // Ajouter un gestionnaire de clic à tous les boutons "CONSULTER"
+    document.querySelectorAll('.btn-consulter').forEach(button => {
+      button.addEventListener('click', () => {
+        if (ws.readyState === WebSocket.OPEN) {
+          ws.send(button.id);  // Envoie l'ID du bouton (ex: "M1")
+          console.log(`Envoyé au serveur : ${button.id}`);
+        } else {
+          console.warn("WebSocket non connecté");
+        }
+      });
+    });
+  </script>
+
 </body>
 </html>

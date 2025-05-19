@@ -3,24 +3,63 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define EXAMPLE_RX_BUFFER_BYTES (10)
+#define EXAMPLE_RX_BUFFER_BYTES (100)
 
-// Callback pour gérer les événements WebSocket
+// Fonction pour écrire dans le CSV
+void ecrire_csv(const char *message) {
+    printf("Ecriture dans CSV : %s\n", message);
+    
+    FILE *f = fopen("C:\\Users\\utilisateur\\Desktop\\EPF\\PAML\\Projet GMAO\\Projet-GMAO\\donnees.csv", "w");
+    if (f == NULL) {
+        perror("Erreur ouverture fichier");
+        return;
+    }
+    fprintf(f, "%s\n", message); // écrit le message + saut de ligne
+    fclose(f);
+}
+
+void lire_fichier_temporaire() {
+    FILE *f = fopen("C:\\Users\\utilisateur\\Desktop\\EPF\\PAML\\Projet GMAO\\Projet-GMAO\\fichier_temporaire.csv", "r");
+    if (f == NULL) {
+        perror("Erreur lors de l'ouverture de fichier_temporaire.csv");
+        return;
+    }
+
+    char ligne[256];
+    while (fgets(ligne, sizeof(ligne), f)) {
+        // Affiche chaque ligne (ou traite-la comme tu veux)
+        printf("Ligne : %s", ligne);
+    }
+
+    fclose(f);
+}
+
+// Callback WebSocket
 static int callback_echo(struct lws *wsi, enum lws_callback_reasons reason,
-                          void *user, void *in, size_t len) {
+                         void *user, void *in, size_t len) {
     switch (reason) {
-        case LWS_CALLBACK_RECEIVE:  // Utiliser LWS_CALLBACK_RECEIVE pour les messages reçus
-            printf("Message recu : %.*s\n", (int)len, (char *)in);
-            system("cscript.exe C:\\Users\\utilisateur\\Desktop\\EPF\\PAML\\runExcel.vbs");
+        case LWS_CALLBACK_RECEIVE: {
+            char message[EXAMPLE_RX_BUFFER_BYTES];
+            snprintf(message, sizeof(message), "%.*s", (int)len, (char *)in);
 
-            // Écho du message au client
-            lws_write(wsi, (unsigned char *)in, len, LWS_WRITE_TEXT);
+            printf("Message recu : %s\n", message);
+            ecrire_csv(message);
+
+
+            // Lancement du script VBS pour exécuter la macro dans Excel
+            system("cscript //nologo C:\\Users\\utilisateur\\Desktop\\EPF\\PAML\\runExcel.vbs");
+
+            lire_fichier_temporaire(); // PREND LES INFORMATIONS DU FICHIER TEMPORAIRE
+
+            // Répondre au client avec le même message
+            lws_write(wsi, (unsigned char *)message, strlen(message), LWS_WRITE_TEXT);
             break;
+        }
         case LWS_CALLBACK_ESTABLISHED:
-            printf("Client connecte\n");
+            printf("Client connecté\n");
             break;
         case LWS_CALLBACK_CLOSED:
-            printf("Client déconnecte\n");
+            printf("Client déconnecté\n");
             break;
         default:
             break;
@@ -28,33 +67,33 @@ static int callback_echo(struct lws *wsi, enum lws_callback_reasons reason,
     return 0;
 }
 
-// Définir l'interface du protocole WebSocket
+// Protocole WebSocket
 static struct lws_protocols protocols[] = {
     {
-        "example-protocol",     // Nom du protocole
-        callback_echo,          // Callback du protocole
-        0,                      // Pas d'options spéciales
-        EXAMPLE_RX_BUFFER_BYTES // Taille du buffer de réception
+        "example-protocol",
+        callback_echo,
+        0,
+        EXAMPLE_RX_BUFFER_BYTES
     },
-    { NULL, NULL, 0, 0 } // Terminer le tableau
+    { NULL, NULL, 0, 0 }
 };
 
 int main(void) {
     struct lws_context_creation_info info;
     struct lws_context *context;
     memset(&info, 0, sizeof(info));
-    
-    info.port = 9001;  // Port d'écoute
+
+    info.port = 9001;
     info.protocols = protocols;
 
     context = lws_create_context(&info);
-
     if (!context) {
         fprintf(stderr, "Échec de la création du contexte\n");
         return 1;
     }
 
-    // Boucle principale du serveur
+    printf("Serveur démarré sur le port %d\n", info.port);
+
     while (1) {
         lws_service(context, 0);
     }

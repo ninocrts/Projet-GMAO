@@ -21,27 +21,27 @@
     <div class="machine">
       <div class="formes"><div class="cercle_vert"></div></div>
       <div class="usine">MACHINE N 1</div>
-      <button class="btn-consulter">CONSULTER</button>
+      <button class="btn-consulter" id="M1">CONSULTER</button>
     </div>
     <div class="machine">
       <div class="formes"><div class="cercle_vert"></div></div>
       <div class="usine">MACHINE N 2</div>
-      <button class="btn-consulter">CONSULTER</button>
+      <button class="btn-consulter" id="M2">CONSULTER</button>
     </div>
     <div class="machine">
       <div class="formes"><div class="carreau_jaune"></div></div>
       <div class="usine">MACHINE N 3</div>
-      <button class="btn-consulter">CONSULTER</button>
+      <button class="btn-consulter" id="M3">CONSULTER</button>
     </div>
     <div class="machine">
       <div class="formes"><div class="cercle_vert"></div></div>
       <div class="usine">MACHINE N 4</div>
-      <button class="btn-consulter">CONSULTER</button>
+      <button class="btn-consulter" id="M4">CONSULTER</button>
     </div>
     <div class="machine">
       <div class="formes"><div class="carre_rouge"></div></div>
       <div class="usine">MACHINE N 5</div>
-      <button class="btn-consulter">CONSULTER</button>
+      <button class="btn-consulter" id="M5">CONSULTER</button>
     </div>
   </div>
 
@@ -49,6 +49,34 @@
     <button class="btn-footer">MAINTENANCE</button>
     <button class="btn-footer">STOCK</button>
   </div>
+  
+  <script>
+  const ws = new WebSocket('ws://localhost:9001');
 
+  ws.onopen = () => {
+    console.log('Connexion WebSocket établie');
+  };
+
+  ws.onmessage = (event) => {
+    const messagesList = document.getElementById('messages');
+    if (messagesList) {
+      const newMessage = document.createElement('li');
+      newMessage.textContent = event.data;
+      messagesList.appendChild(newMessage);
+    }
+  };
+
+  // Ajouter un écouteur sur tous les boutons "CONSULTER"
+  document.querySelectorAll('.btn-consulter').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.id; // récupère l'id (ex: M1)
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.send(id);
+      } else {
+        console.error('WebSocket non connecté');
+      }
+    });
+  });
+</script>
 </body>
 </html>

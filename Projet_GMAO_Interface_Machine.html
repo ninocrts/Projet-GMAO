@@ -16,14 +16,38 @@
 
     <div class="right-panel">
       <div class="intervention-box">
-        <div class="intervention-header">LISTE DES INTERVENTIONS</div>
+        <div class="intervention-header">LISTE DES INTERVENTIONS <ul id="messages"></ul> </div>
         <div class="intervention-list"></div>
       </div>
-      <button class="action-btn">AJOUTER </button>
+      <input type="text" id="messageInput" placeholder="Entrez un message">
+      <button id="sendMessage" class="action-btn">Ajouter</button>
+    
+
       <button class="action-btn"> SUPPRIMER</button>
     </div>
     
   </div>
+
+  <script>
+    // Connexion au serveur WebSocket
+    const ws = new WebSocket('ws://localhost:9001');
+
+    // Écouter les messages du serveur
+    ws.onmessage = (event) => {
+        const messagesList = document.getElementById('messages');
+        const newMessage = document.createElement('li');
+        newMessage.textContent = event.data;
+        messagesList.appendChild(newMessage);
+    };
+
+    // Écouter clic sur le bouton d'envoi
+    document.getElementById('sendMessage').onclick = () => {
+        const input = document.getElementById('messageInput');
+        const message = input.value;
+        ws.send(message);
+        input.value = ''; // Réinitialiser le champ de saisie
+    };
+</script>
 
 </body>
 </html>
