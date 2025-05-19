@@ -72,8 +72,7 @@
         if (ws.readyState === WebSocket.OPEN) {
           ws.send(button.id);
           console.log(`Envoyé au serveur : ${button.id}`);
-          // Redirection vers la page interface machine
-          window.location.href = "Projet_GMAO_Interface_Machine.html";
+
         } else {
           console.warn("WebSocket non connecté");
         }
