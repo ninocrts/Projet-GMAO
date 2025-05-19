@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Chaîne de Production - Page 1</title>
+  <title>Chaîne de Production - Page 2</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="ProjetGMAO.css">
 </head>
@@ -11,9 +11,9 @@
   <div class="header">
     <div class="titre">CHAÎNE DE PRODUCTION N</div>
     <div class="chaines">
-        <a href="Projet_GMAO_Page1.html" class="btn-chain">1</a>
-        <a href="Projet_GMAO_Page2.html" class="btn-chain active">2</a>
-        <a href="Projet_GAMO_Page3.html" class="btn-chain">3</a>
+      <a href="Projet_GMAO_Page1.html" class="btn-chain">1</a>
+      <a href="Projet_GMAO_Page2.html" class="btn-chain active">2</a>
+      <a href="Projet_GMAO_Page3.html" class="btn-chain">3</a>
     </div>
   </div>
 
@@ -21,27 +21,27 @@
     <div class="machine">
       <div class="formes"><div class="cercle_vert"></div></div>
       <div class="usine">MACHINE N 6</div>
-      <button class="btn-consulter">CONSULTER</button>
+      <button class="btn-consulter" id="M6">CONSULTER</button>
     </div>
     <div class="machine">
       <div class="formes"><div class="cercle_vert"></div></div>
       <div class="usine">MACHINE N 7</div>
-      <button class="btn-consulter">CONSULTER</button>
+      <button class="btn-consulter" id="M7">CONSULTER</button>
     </div>
     <div class="machine">
       <div class="formes"><div class="carreau_jaune"></div></div>
       <div class="usine">MACHINE N 8</div>
-      <button class="btn-consulter">CONSULTER</button>
+      <button class="btn-consulter" id="M8">CONSULTER</button>
     </div>
     <div class="machine">
       <div class="formes"><div class="cercle_vert"></div></div>
       <div class="usine">MACHINE N 9</div>
-      <button class="btn-consulter">CONSULTER</button>
+      <button class="btn-consulter" id="M9">CONSULTER</button>
     </div>
     <div class="machine">
       <div class="formes"><div class="carre_rouge"></div></div>
       <div class="usine">MACHINE N 10</div>
-      <button class="btn-consulter">CONSULTER</button>
+      <button class="btn-consulter" id="M10">CONSULTER</button>
     </div>
   </div>
 
@@ -51,7 +51,6 @@
   </div>
 
   <script>
-    // Connexion au serveur WebSocket
     const ws = new WebSocket('ws://localhost:9001');
 
     ws.onopen = () => {
@@ -64,15 +63,16 @@
 
     ws.onmessage = (event) => {
       console.log("Message reçu du serveur :", event.data);
-      // Tu peux gérer la réponse du serveur ici si besoin
     };
 
-    // Ajouter un gestionnaire de clic à tous les boutons "CONSULTER"
+    // Gestion clic sur les boutons consulter
     document.querySelectorAll('.btn-consulter').forEach(button => {
       button.addEventListener('click', () => {
         if (ws.readyState === WebSocket.OPEN) {
-          ws.send(button.id);  // Envoie l'ID du bouton (ex: "M1")
+          ws.send(button.id);
           console.log(`Envoyé au serveur : ${button.id}`);
+          // Redirection vers la page interface machine
+          window.location.href = "Projet_GMAO_Interface_Machine.html";
         } else {
           console.warn("WebSocket non connecté");
         }

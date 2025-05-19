@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Chaîne de Production - Page 1</title>
+  <title>Chaîne de Production - Page 3</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="ProjetGMAO.css">
 </head>
@@ -11,9 +11,9 @@
   <div class="header">
     <div class="titre">CHAÎNE DE PRODUCTION N</div>
     <div class="chaines">
-        <a href="Projet_GMAO_Page1.html" class="btn-chain">1</a>
-        <a href="Projet_GMAO_Page2.html" class="btn-chain">2</a>
-        <a href="Projet_GAMO_Page3.html" class="btn-chain active">3</a>
+      <a href="Projet_GMAO_Page1.html" class="btn-chain">1</a>
+      <a href="Projet_GMAO_Page2.html" class="btn-chain">2</a>
+      <a href="Projet_GMAO_Page3.html" class="btn-chain active">3</a>
     </div>
   </div>
 
@@ -64,15 +64,16 @@
 
     ws.onmessage = (event) => {
       console.log("Message reçu du serveur :", event.data);
-      // Tu peux gérer la réponse du serveur ici si besoin
     };
 
-    // Ajouter un gestionnaire de clic à tous les boutons "CONSULTER"
+    // Gestion clic sur boutons "CONSULTER"
     document.querySelectorAll('.btn-consulter').forEach(button => {
       button.addEventListener('click', () => {
         if (ws.readyState === WebSocket.OPEN) {
-          ws.send(button.id);  // Envoie l'ID du bouton (ex: "M1")
+          ws.send(button.id);
           console.log(`Envoyé au serveur : ${button.id}`);
+          // Redirection vers la page interface machine
+          window.location.href = "Projet_GMAO_Interface_Machine.html";
         } else {
           console.warn("WebSocket non connecté");
         }
