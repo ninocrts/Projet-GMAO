@@ -18,7 +18,7 @@ void ecrire_csv(const char *message) {
     fclose(f);
 }
 
-void lire_fichier_temporaire() {
+void lire_fichier_temporaire(struct lws *wsi) {
     FILE *f = fopen("C:\\Users\\utilisateur\\Desktop\\EPF\\PAML\\Projet GMAO\\Projet-GMAO\\fichier_temporaire.csv", "r");
     if (f == NULL) {
         perror("Erreur lors de l'ouverture de fichier_temporaire.csv");
@@ -27,8 +27,17 @@ void lire_fichier_temporaire() {
 
     char ligne[256];
     while (fgets(ligne, sizeof(ligne), f)) {
-        // Affiche chaque ligne (ou traite-la comme tu veux)
         printf("Ligne : %s", ligne);
+
+        size_t len = strlen(ligne);
+        if (len > 0 && ligne[len-1] == '\n') {
+            ligne[len-1] = '\0'; // retirer saut de ligne
+            len--;
+        }
+
+        unsigned char buffer[LWS_PRE + 256];
+        memcpy(&buffer[LWS_PRE], ligne, len);
+        lws_write(wsi, &buffer[LWS_PRE], len, LWS_WRITE_TEXT);
     }
 
     fclose(f);
@@ -45,14 +54,15 @@ static int callback_echo(struct lws *wsi, enum lws_callback_reasons reason,
             printf("Message recu : %s\n", message);
             ecrire_csv(message);
 
-
             // Lancement du script VBS pour exécuter la macro dans Excel
             system("cscript //nologo C:\\Users\\utilisateur\\Desktop\\EPF\\PAML\\runExcel.vbs");
 
-            lire_fichier_temporaire(); // PREND LES INFORMATIONS DU FICHIER TEMPORAIRE
+            // Envoie les infos du fichier temporaire au client
+            lire_fichier_temporaire(wsi);
 
-            // Répondre au client avec le même message
-            lws_write(wsi, (unsigned char *)message, strlen(message), LWS_WRITE_TEXT);
+            // Répondre au client avec le même message (optionnel)
+            //lws_write(wsi, (unsigned char *)message, strlen(message), LWS_WRITE_TEXT);
+
             break;
         }
         case LWS_CALLBACK_ESTABLISHED:

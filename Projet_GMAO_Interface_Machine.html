@@ -9,9 +9,9 @@
 
   <div class="interface-container">
     <div class="left-panel">
-      <button class="info-btn">ETAT :</button>
-      <button class="info-btn">NOM MACHINE:</button>
-      <button class="info-btn">ID MACHINE:</button>
+      <div class="info-btn">ETAT : <span id="etat">-</span></div>
+      <div class="info-btn">NOM MACHINE : <span id="nom_machine">-</span></div>
+      <div class="info-btn">ID MACHINE : <span id="id_machine">-</span></div>
     </div>
 
     <div class="right-panel">
@@ -21,33 +21,37 @@
       </div>
       <input type="text" id="messageInput" placeholder="Entrez un message">
       <button id="sendMessage" class="action-btn">Ajouter</button>
-    
-
       <button class="action-btn"> SUPPRIMER</button>
     </div>
     
   </div>
 
   <script>
-    // Connexion au serveur WebSocket
     const ws = new WebSocket('ws://localhost:9001');
 
-    // Écouter les messages du serveur
     ws.onmessage = (event) => {
-        const messagesList = document.getElementById('messages');
-        const newMessage = document.createElement('li');
-        newMessage.textContent = event.data;
-        messagesList.appendChild(newMessage);
+        const data = event.data.trim();
+        const parts = data.split(';');
+
+        if(parts.length === 3) {
+            document.getElementById('etat').textContent = parts[0];
+            document.getElementById('nom_machine').textContent = parts[1];
+            document.getElementById('id_machine').textContent = parts[2];
+        } else {
+            const messagesList = document.getElementById('messages');
+            const newMessage = document.createElement('li');
+            newMessage.textContent = data;
+            messagesList.appendChild(newMessage);
+        }
     };
 
-    // Écouter clic sur le bouton d'envoi
     document.getElementById('sendMessage').onclick = () => {
         const input = document.getElementById('messageInput');
         const message = input.value;
         ws.send(message);
-        input.value = ''; // Réinitialiser le champ de saisie
+        input.value = '';
     };
-</script>
+  </script>
 
 </body>
 </html>
