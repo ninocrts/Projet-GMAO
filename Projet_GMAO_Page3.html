@@ -69,6 +69,7 @@
     // Gestion clic sur boutons "CONSULTER"
     document.querySelectorAll('.btn-consulter').forEach(button => {
       button.addEventListener('click', () => {
+        window.location.href = 'Projet_GMAO_Interface_Machine.html';
         if (ws.readyState === WebSocket.OPEN) {
           ws.send(button.id);
           console.log(`Envoyé au serveur : ${button.id}`);

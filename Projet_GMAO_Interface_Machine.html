@@ -30,20 +30,21 @@
     const ws = new WebSocket('ws://localhost:9001');
 
     ws.onmessage = (event) => {
-        const data = event.data.trim();
-        const parts = data.split(';');
+    const data = event.data.trim();
+    const parts = data.split(';');
 
-        if(parts.length === 3) {
-            document.getElementById('etat').textContent = parts[0];
-            document.getElementById('nom_machine').textContent = parts[1];
-            document.getElementById('id_machine').textContent = parts[2];
-        } else {
-            const messagesList = document.getElementById('messages');
-            const newMessage = document.createElement('li');
-            newMessage.textContent = data;
-            messagesList.appendChild(newMessage);
-        }
-    };
+    if(parts.length === 3) {
+        document.getElementById('id_machine').textContent = parts[0];
+        document.getElementById('etat').textContent = parts[1];
+        document.getElementById('nom_machine').textContent = parts[2];
+    } else {
+        const messagesList = document.getElementById('messages');
+        const newMessage = document.createElement('li');
+        newMessage.textContent = data;
+        messagesList.appendChild(newMessage);
+    }
+};
+
 
     document.getElementById('sendMessage').onclick = () => {
         const input = document.getElementById('messageInput');

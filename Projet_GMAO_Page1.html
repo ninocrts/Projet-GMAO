@@ -57,17 +57,16 @@
       console.log('Connexion WebSocket établie');
     };
 
-    // Pas besoin ici d'écouter les messages pour cette page
-    // (sauf si tu veux afficher des messages, sinon tu peux enlever)
 
-    document.querySelectorAll('.btn-consulter').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = btn.id; // ex: M1
+    document.querySelectorAll('.btn-consulter').forEach(button => {
+      button.addEventListener('click', () => {
+        window.location.href = 'Projet_GMAO_Interface_Machine.html';
         if (ws.readyState === WebSocket.OPEN) {
-          ws.send(id);
-          
+          ws.send(button.id);
+          console.log(`Envoyé au serveur : ${button.id}`);
+
         } else {
-          console.error('WebSocket non connecté');
+          console.warn("WebSocket non connecté");
         }
       });
     });
