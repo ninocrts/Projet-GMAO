@@ -49,6 +49,7 @@
     <button class="btn-footer">MAINTENANCE</button>
     <button class="btn-footer">STOCK</button>
   </div>
+
   
   <script>
     const ws = new WebSocket('ws://localhost:9001');
@@ -57,19 +58,36 @@
       console.log('Connexion WebSocket établie');
     };
 
+    ws.onerror = (err) => {
+      console.error('Erreur WebSocket', err);
+    };
+
+    
 
     document.querySelectorAll('.btn-consulter').forEach(button => {
       button.addEventListener('click', () => {
-        window.location.href = 'Projet_GMAO_Interface_Machine.html';
         if (ws.readyState === WebSocket.OPEN) {
           ws.send(button.id);
-          console.log(`Envoyé au serveur : ${button.id}`);
-
+          console.log('Envoyé au serveur :', button.id);
         } else {
-          console.warn("WebSocket non connecté");
+          console.warn('WebSocket non connecté');
         }
       });
     });
+
+    ws.onmessage = (event) => {
+      console.log('Données reçues :', event.data);
+      const parts = event.data.trim().split(';');
+      if (parts.length === 3) {
+        sessionStorage.setItem('id_machine', parts[0]);
+        sessionStorage.setItem('etat', parts[1]);
+        sessionStorage.setItem('nom_machine', parts[2]);
+        window.location.href = 'Projet_GMAO_Interface_Machine.html';
+      } else {
+        console.warn("Format de message incorrect :", event.data);
+      }
+    };
+
   </script>
 </body>
 </html>

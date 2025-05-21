@@ -16,41 +16,42 @@
 
     <div class="right-panel">
       <div class="intervention-box">
-        <div class="intervention-header">LISTE DES INTERVENTIONS <ul id="messages"></ul> </div>
-        <div class="intervention-list"></div>
+        <div class="intervention-header">LISTE DES INTERVENTIONS</div>
+        <ul id="messages"></ul>
       </div>
       <input type="text" id="messageInput" placeholder="Entrez un message">
       <button id="sendMessage" class="action-btn">Ajouter</button>
-      <button class="action-btn"> SUPPRIMER</button>
+      <button id="clearMessages" class="action-btn">SUPPRIMER</button>
     </div>
-    
   </div>
 
   <script>
-    const ws = new WebSocket('ws://localhost:9001');
+    window.onload = () => {
+      document.getElementById('id_machine').textContent = sessionStorage.getItem('id_machine') || '-';
+      document.getElementById('etat').textContent = sessionStorage.getItem('etat') || '-';
+      document.getElementById('nom_machine').textContent = sessionStorage.getItem('nom_machine') || '-';
+      console.log("ID Machine:", sessionStorage.getItem('id_machine'));
+      console.log("Etat Machine:", sessionStorage.getItem('etat'));
+      console.log("Nom Machine:", sessionStorage.getItem('nom_machine'));
+    };
 
-    ws.onmessage = (event) => {
-    const data = event.data.trim();
-    const parts = data.split(';');
+    const messagesList = document.getElementById('messages');
 
-    if(parts.length === 3) {
-        document.getElementById('id_machine').textContent = parts[0];
-        document.getElementById('etat').textContent = parts[1];
-        document.getElementById('nom_machine').textContent = parts[2];
-    } else {
-        const messagesList = document.getElementById('messages');
-        const newMessage = document.createElement('li');
-        newMessage.textContent = data;
-        messagesList.appendChild(newMessage);
-    }
-};
-
-
+    // Ajouter intervention
     document.getElementById('sendMessage').onclick = () => {
-        const input = document.getElementById('messageInput');
-        const message = input.value;
-        ws.send(message);
+      const input = document.getElementById('messageInput');
+      const message = input.value.trim();
+      if (message) {
+        const newMessage = document.createElement('li');
+        newMessage.textContent = message;
+        messagesList.appendChild(newMessage);
         input.value = '';
+      }
+    };
+
+    // Supprimer toutes les interventions
+    document.getElementById('clearMessages').onclick = () => {
+      messagesList.innerHTML = '';
     };
   </script>
 
