@@ -5,13 +5,13 @@
   <title>Interface Machine</title>
   <link rel="stylesheet" href="ProjetGMAO.css">
 </head>
-<body>
+<body style="background-color: lightgreen;">
 
   <div class="interface-container">
     <div class="left-panel">
-      <div class="info-btn">ETAT : <span id="etat">-</span></div>
-      <div class="info-btn">NOM MACHINE : <span id="nom_machine">-</span></div>
-      <div class="info-btn">ID MACHINE : <span id="id_machine">-</span></div>
+      <div class="info-btn">ETAT : <span id="etat" style="color: red;">-</span></div>
+      <div class="info-btn">NOM MACHINE : <span id="nom_machine" style="color: red;">-</span></div>
+      <div class="info-btn">ID MACHINE : <span id="id_machine" style="color: red;">-</span></div>
     </div>
 
     <div class="right-panel">
@@ -20,38 +20,42 @@
         <ul id="messages"></ul>
       </div>
       <input type="text" id="messageInput" placeholder="Entrez un message">
-      <button id="sendMessage" class="action-btn">Ajouter</button>
-      <button id="clearMessages" class="action-btn">SUPPRIMER</button>
+      <button id="Ajouter" class="action-btn">Ajouter</button>
+      <button id="Supprimer" class="action-btn">SUPPRIMER</button>
     </div>
   </div>
 
   <script>
+    const ws = new WebSocket('ws://localhost:9001');
+    const idMachine = sessionStorage.getItem('id_machine') || '-';
+
     window.onload = () => {
-      document.getElementById('id_machine').textContent = sessionStorage.getItem('id_machine') || '-';
+      document.getElementById('id_machine').textContent = idMachine;
       document.getElementById('etat').textContent = sessionStorage.getItem('etat') || '-';
       document.getElementById('nom_machine').textContent = sessionStorage.getItem('nom_machine') || '-';
-      console.log("ID Machine:", sessionStorage.getItem('id_machine'));
-      console.log("Etat Machine:", sessionStorage.getItem('etat'));
-      console.log("Nom Machine:", sessionStorage.getItem('nom_machine'));
     };
 
     const messagesList = document.getElementById('messages');
+    const input = document.getElementById('messageInput');
 
-    // Ajouter intervention
-    document.getElementById('sendMessage').onclick = () => {
-      const input = document.getElementById('messageInput');
-      const message = input.value.trim();
-      if (message) {
-        const newMessage = document.createElement('li');
-        newMessage.textContent = message;
-        messagesList.appendChild(newMessage);
+    document.getElementById('Ajouter').onclick = () => {
+      const msg = input.value.trim();
+      if (msg && ws.readyState === WebSocket.OPEN) {
+        ws.send(`ajouter;${msg};${idMachine}`);
+        const li = document.createElement('li');
+        li.textContent = msg;
+        li.onclick = () => li.classList.toggle('selected');
+        messagesList.appendChild(li);
         input.value = '';
       }
     };
 
-    // Supprimer toutes les interventions
-    document.getElementById('clearMessages').onclick = () => {
-      messagesList.innerHTML = '';
+    document.getElementById('Supprimer').onclick = () => {
+      const selected = messagesList.querySelector('.selected');
+      if (selected && ws.readyState === WebSocket.OPEN) {
+        ws.send(`supprimer;${selected.textContent};${idMachine}`);
+        messagesList.removeChild(selected);
+      }
     };
   </script>
 
