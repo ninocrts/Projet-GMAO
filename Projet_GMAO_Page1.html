@@ -75,18 +75,31 @@
       });
     });
 
-    ws.onmessage = (event) => {
-      console.log('Données reçues :', event.data);
-      const parts = event.data.trim().split(';');
-      if (parts.length === 3) {
-        sessionStorage.setItem('id_machine', parts[0]);
-        sessionStorage.setItem('etat', parts[1]);
-        sessionStorage.setItem('nom_machine', parts[2]);
-        window.location.href = 'Projet_GMAO_Interface_Machine.html';
-      } else {
-        console.warn("Format de message incorrect :", event.data);
-      }
-    };
+   ws.onmessage = (event) => {
+  console.log('Données reçues :', event.data);
+  const parts = event.data.trim().split(';');
+
+  if (parts.length >= 3) {
+    // Stockage des trois premières parties
+    sessionStorage.setItem('id_machine', parts[0]);
+    sessionStorage.setItem('etat', parts[1]);
+    sessionStorage.setItem('nom_machine', parts[2]);
+
+    // Suppression préalable des anciennes interventions (facultatif)
+    for (let i = 1; sessionStorage.getItem(`intervention_${i}`); i++) {
+      sessionStorage.removeItem(`intervention_${i}`);
+    }
+
+    // Stockage dynamique des interventions s'il y a des éléments supplémentaires
+    for (let i = 3; i < parts.length; i++) {
+      sessionStorage.setItem(`intervention_${i - 2}`, parts[i]);
+    }
+
+    window.location.href = 'Projet_GMAO_Interface_Machine.html';
+  } else {
+    console.warn("Format de message incorrect :", event.data);
+  }
+};
 
   </script>
 </body>

@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <title>Interface Machine</title>
   <link rel="stylesheet" href="ProjetGMAO.css">
+  <style>
+    .selected {
+      background-color: yellow;
+    }
+  </style>
 </head>
 <body style="background-color: lightgreen;">
 
@@ -29,15 +34,28 @@
     const ws = new WebSocket('ws://localhost:9001');
     const idMachine = sessionStorage.getItem('id_machine') || '-';
 
-    window.onload = () => {
-      document.getElementById('id_machine').textContent = idMachine;
-      document.getElementById('etat').textContent = sessionStorage.getItem('etat') || '-';
-      document.getElementById('nom_machine').textContent = sessionStorage.getItem('nom_machine') || '-';
-    };
-
     const messagesList = document.getElementById('messages');
     const input = document.getElementById('messageInput');
 
+    window.onload = () => {
+      // Affichage des infos machine
+      document.getElementById('id_machine').textContent = idMachine;
+      document.getElementById('etat').textContent = sessionStorage.getItem('etat') || '-';
+      document.getElementById('nom_machine').textContent = sessionStorage.getItem('nom_machine') || '-';
+
+      // Chargement dynamique des interventions
+      let i = 1;
+      let intervention;
+      while ((intervention = sessionStorage.getItem(`intervention_${i}`)) !== null) {
+        const li = document.createElement('li');
+        li.textContent = intervention;
+        li.onclick = () => li.classList.toggle('selected');
+        messagesList.appendChild(li);
+        i++;
+      }
+    };
+
+    // Ajouter une intervention
     document.getElementById('Ajouter').onclick = () => {
       const msg = input.value.trim();
       if (msg && ws.readyState === WebSocket.OPEN) {
@@ -50,6 +68,7 @@
       }
     };
 
+    // Supprimer l'intervention sélectionnée
     document.getElementById('Supprimer').onclick = () => {
       const selected = messagesList.querySelector('.selected');
       if (selected && ws.readyState === WebSocket.OPEN) {
