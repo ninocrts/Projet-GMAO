@@ -38,12 +38,11 @@
     const input = document.getElementById('messageInput');
 
     window.onload = () => {
-      // Affichage des infos machine
       document.getElementById('id_machine').textContent = idMachine;
       document.getElementById('etat').textContent = sessionStorage.getItem('etat') || '-';
       document.getElementById('nom_machine').textContent = sessionStorage.getItem('nom_machine') || '-';
 
-      // Chargement dynamique des interventions
+      // Chargement des interventions depuis sessionStorage (optionnel)
       let i = 1;
       let intervention;
       while ((intervention = sessionStorage.getItem(`intervention_${i}`)) !== null) {
@@ -59,7 +58,7 @@
     document.getElementById('Ajouter').onclick = () => {
       const msg = input.value.trim();
       if (msg && ws.readyState === WebSocket.OPEN) {
-        ws.send(`ajouter;${msg};${idMachine}`);
+        ws.send(`${idMachine};ajouter;${msg}`);
         const li = document.createElement('li');
         li.textContent = msg;
         li.onclick = () => li.classList.toggle('selected');
@@ -68,7 +67,7 @@
       }
     };
 
-    // Supprimer l'intervention sélectionnée
+    // Supprimer une intervention sélectionnée
     document.getElementById('Supprimer').onclick = () => {
       const selected = messagesList.querySelector('.selected');
       if (selected && ws.readyState === WebSocket.OPEN) {
